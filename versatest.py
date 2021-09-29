@@ -1,3 +1,17 @@
+import serial
+
+ser = serial.Serial(
+    port='/dev/ttyUSB0',
+    baudrate=9600,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS
+)
+
+print(ser.name)         # check which port was really used
+ser.write(b'0xf2')     # write a string
+ser.close()             # close port
+
 def percent_to_8bit(percent):
     '''Converts a percentage (0.0 to 100.0%) to an 8 bit bytearray.'''
     if (percent > 0.0) & (percent <= 100.0): 

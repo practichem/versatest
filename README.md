@@ -1,4 +1,5 @@
-# versatest
+# Mecmesin VersaTest force test stand commands
+Note inter-byte delay implemented in code.
 
 
 | Function  |  Command  |  Returned bytes  |  Description  |  Note  |

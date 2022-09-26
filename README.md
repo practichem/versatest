@@ -15,9 +15,9 @@ Note inter-byte delay implemented in code.
 |set_ls_normal	    |0A0h|	0|	Maintains the limit switch in the non-limited position.	|
 |set_ls_up          |0A1h|	0|	Maintains the limit switch in the up limited position.	|
 |set_ls_dn	        |0A2h|	0|	Maintains the limit switch in the down limited position.	|
-|get_mdgols	        |0E0h|	1|	Requests a byte comprising mimicked |switch status 00MDGOLS|	
-|get_up_spd|	        0E1h|	1|	Requests the set up speed. |Returns a byte value percentage.	
-|get_dn_spd	        |0E2h|	1|	Requests the set down speed. |Returns a byte value percentage.|	
+|get_mdgols	        |0E0h|	1|	Requests a byte comprising mimicked switch status 00MDGOLS|	
+|get_up_speed|	        0E1h|	1|	Requests the set up speed. |Returns a byte value percentage.	
+|get_dn_speed	        |0E2h|	1|	Requests the set down speed. |Returns a byte value percentage.|	
 |get_motor_run	   | 0E8h|	1|	Returns the current motor run status (TODO: ???)|	
 |get_motor_speed	|    0E9h	|1|	Returns the actual motor speed.| Returns a byte value percentage	|
 |get_version 	   | 0EFh|	1|	Returns the firmware version.|	

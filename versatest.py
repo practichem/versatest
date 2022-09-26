@@ -9,11 +9,11 @@ class versatest():
     def open_channel(self, port, speed):
         return serial.Serial(port, speed, timeout = 0.5, write_timeout = 0.5)
 
-    def send_bytes(self, wrapped_command):
-        self.connection.write(bytes(wrapped_command, 'utf-8'))
+    def send_bytes(self, command):
+        self.connection.write(command)
     
-    def receive_bytes(self, byte_length):
-        message = self.connection.read_until()
+    def receive_bytes(self, number_of_bytes):
+        return self.connection.read(1)
 
     def make_packet(self, command, parameter):
         packet = bytearray()
@@ -50,13 +50,14 @@ class versatest():
 
     def set_go(self, mode):          # Simulates the up/down switch: neutral, up, down
         command = 0
-        if mode == 'neutral':
+        if mode == 'off':
             command = 0x90
         elif mode == 'up':
             command = 0x91
         elif mode == 'down':
             command = 0x92
-        return command.to_bytes(1,'big')
+        message = command.to_bytes(1,'big')
+        self.send_bytes(message)
 
     def set_limit(self, mode):       # Simulates the travel limit switch set: open, up_limit, down_limit
         command = 0
@@ -85,27 +86,33 @@ class versatest():
             return command
 
     def get_up_speed_setpoint(self):            # Returns set speed for up.
-            command = 0xe1
+            command = 0xE1
             return command
 
     def get_down_speed_setpoint(self):          # Returns set speed for down.
-            command = 0xe2
+            command = 0xE2
             return command
 
     def get_run_state(self):
-            command = 0xe8
+            command = 0xE8
             return command        
 
     def get_run_speed(self):
-            command = 0xe9
-            return command
+            command = 0xE9
+            self.send_bytes(command)
+            response = self.receive_bytes(1)
+            print(len(response))
 
     def get_version(self):
             command = 0xEF
-            return command
-
+            self.send_bytes(command)
+            response = self.receive_bytes(1)
+            print(len(response))
 
     # https://stackoverflow.com/questions/17553543/pyserial-non-blocking-read-loop/38758773
 
-
+my_versatest = versatest("COM5", 9600)
+result = my_versatest.get_run_speed()
+print(result)
+#my_versatest.set_go("off")
 

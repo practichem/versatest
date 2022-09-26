@@ -13,7 +13,7 @@ Note inter-byte delay implemented in code.
 |set_go_up	|        091h	|0|	Maintains the up/down switch in the up position.	|Follow this command with a center command.|
 |set_go_down|	        092h	|0	|Maintains the up/down switch in the down position.	|Follow this command with a center command.|
 |set_ls_normal	    |0A0h|	0|	Maintains the limit switch in the non-limited position.	|
-|set_ls_up|	        |0A1h|	0|	Maintains the limit switch in the up limited position.	|
+|set_ls_up          |0A1h|	0|	Maintains the limit switch in the up limited position.	|
 |set_ls_dn	        |0A2h|	0|	Maintains the limit switch in the down limited position.	|
 |get_mdgols	        |0E0h|	1|	Requests a byte comprising mimicked |switch status 00MDGOLS|	
 |get_up_spd|	        0E1h|	1|	Requests the set up speed. |Returns a byte value percentage.	

@@ -3,23 +3,32 @@ class VersaTest:
         self.command = 0
         self.parameter = 0
 
-    def set_speed(self, direction, speed):
-        # Sets the speed. Direction is 'up' or 'down'. 0xFF = 100%
+    def _percent_to_8bit(self, percent):
+        '''Converts a percentage (0.0 to 100.0%) to an 8-bit bytearray.'''
+        if 0.0 <= percent <= 100.0:
+            return round(percent * 2.55)
+        return 0
+    
+    @speed.setter
+    def speed(self, new_speed):
+        if new_speed < 0.0 or new_speed > 100.0:
+            raise ValueError("Speed must be between 0.0 and 100.0")
+        self._speed = new_speed
         self.command = 0
-        self.parameter = percent_to_8bit(speed)
 
-        if direction == 'up':
-            self.command = 0x1
-        elif direction == 'down':
-            self.command = 0x2
-
-    def set_mode(self, mode):
+    @mode.setter
+    def mode(self, new_mode):
         mode_mapping = {
             'manual': 0x80,
             'single_cycle': 0x81,
             'cont_cycle': 0x82
         }
-        self.command = mode_mapping.get(mode, 0)
+
+        if new_mode not in mode_mapping:
+            raise ValueError("Invalid mode")
+
+        self._mode = new_mode
+        self.command = mode_mapping[new_mode]
 
     def set_go(self, mode):
         mode_mapping = {
@@ -62,8 +71,4 @@ class VersaTest:
     def get_version(self):
         return self.command.to_bytes(1, 'big')
 
-    def percent_to_8bit(self, percent):
-        '''Converts a percentage (0.0 to 100.0%) to an 8-bit bytearray.'''
-        if 0.0 <= percent <= 100.0:
-            return round(percent * 2.55)
-        return 0
+
